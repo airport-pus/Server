@@ -4,9 +4,9 @@ spring:
       - optional:file:env/spring.env[.properties]
 
 api:
-  airport:
-    base-url: http://openapi.airport.co.kr/service/rest/AirportParkingCongestion/airportParkingCongestionRT
-    service-key: ${API_AIRPORT_PARKING_KEY}
+  service-key: ${API_AIRPORT_PARKING_KEY}
+  parking-base-url: http://openapi.airport.co.kr/service/rest/AirportParkingCongestion/airportParkingCongestionRT
+  congestion-base-url: https://api.odcloud.kr/api/getAPRTPsgrCongestion_v2/v1/aprtPsgrCongestion%E2%80%8BV2
 
 logging:
   level:
