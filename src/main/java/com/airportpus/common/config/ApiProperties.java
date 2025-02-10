@@ -8,9 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "api.airport")
+@ConfigurationProperties(prefix = "api")
 public class ApiProperties {
 
-  private String baseUrl;
   private String serviceKey;
+  private String parkingBaseUrl;
+  private String congestionBaseUrl;
 }
