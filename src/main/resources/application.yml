@@ -1,0 +1,13 @@
+spring:
+  config:
+    import:
+      - optional:file:env/spring.env[.properties]
+
+api:
+  airport:
+    base-url: http://openapi.airport.co.kr/service/rest/AirportParkingCongestion/airportParkingCongestionRT
+    service-key: ${API_AIRPORT_PARKING_KEY}
+
+logging:
+  level:
+    org.springframework.web.reactive.function.client: DEBUG
