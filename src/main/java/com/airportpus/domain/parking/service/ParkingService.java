@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ParkingService {
 
-  private final WebClient webClient;
+  private final WebClient parkingWebClient;
   private final ApiProperties apiProperties;
   private final XmlMapper xmlMapper = new XmlMapper();
 
   public List<ParkingResponse> getParkingInfo() {
-    return webClient.get()
+    return parkingWebClient.get()
         .uri(uriBuilder -> uriBuilder
             .queryParam("serviceKey", apiProperties.getServiceKey())
             .queryParam("schAirportCode", "PUS")
@@ -44,22 +44,7 @@ public class ParkingService {
     }
 
     return parkingApiResponse.getBody().getItems().stream()
-          .map(this::toParkingResponse)
+          .map(ParkingResponse::from)
           .collect(Collectors.toList());
-  }
-
-  private ParkingResponse toParkingResponse(ParkingApiResponse.ParkingInfo parkingInfo) {
-    int occupiedSpace = parkingInfo.getOccupiedSpace();
-    int totalSpace = parkingInfo.getTotalSpace();
-    int remainingSpace = totalSpace - occupiedSpace;
-
-    return new ParkingResponse(
-        parkingInfo.getParkingName(),
-        parkingInfo.getCongestion(),
-        parkingInfo.getCongestionDegree(),
-        occupiedSpace,
-        totalSpace,
-        remainingSpace
-    );
   }
 }
