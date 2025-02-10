@@ -1,6 +1,7 @@
 package com.airportpus.common.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.codec.xml.Jaxb2XmlDecoder;
@@ -16,8 +17,9 @@ public class WebClientConfig {
   private final ApiProperties apiProperties;
 
   @Bean
-  public WebClient webClient() {
-    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(apiProperties.getBaseUrl());
+  @Qualifier("parkingWebClient")
+  public WebClient parkingWebClient() {
+    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(apiProperties.getParkingBaseUrl());
     factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
 
     return WebClient.builder()
@@ -31,4 +33,14 @@ public class WebClientConfig {
         .build();
   }
 
+  @Bean
+  @Qualifier("congestionWebClient")
+  public WebClient congestionWebClient() {
+    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(apiProperties.getCongestionBaseUrl());
+    factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
+
+    return WebClient.builder()
+        .uriBuilderFactory(factory)
+        .build();
+  }
 }
