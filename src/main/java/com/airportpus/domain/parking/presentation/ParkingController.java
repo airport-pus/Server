@@ -17,7 +17,7 @@ public class ParkingController {
   private final ParkingService parkingService;
 
   @GetMapping(produces = "application/json")
-  public List<ParkingResponse> getParkingInfo() {
+  public List<ParkingResponse> getParking() {
     return parkingService.getParkingInfo();
   }
 }
