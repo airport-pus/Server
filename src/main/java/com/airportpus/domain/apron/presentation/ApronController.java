@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/apron")
@@ -17,7 +18,12 @@ public class ApronController {
   private final ApronService apronService;
 
   @GetMapping(produces = "application/json")
-  public List<?> getInApron(@RequestParam("io") String type) {
+  public List<?> getApron(@RequestParam("io") String type) {
     return apronService.getApronInfo(type);
+  }
+
+  @GetMapping(value = "/flight", produces = "application/json")
+  public Optional<?> getApronByFlightNumber(@RequestParam("flightNumber") String flightNumber) {
+    return apronService.getApronInfoByFlightNumber(flightNumber);
   }
 }
