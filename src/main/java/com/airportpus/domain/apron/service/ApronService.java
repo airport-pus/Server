@@ -1,6 +1,7 @@
 package com.airportpus.domain.apron.service;
 
 import com.airportpus.common.config.ApiProperties;
+import com.airportpus.domain.apron.exception.FlightNumberNotFoundException;
 import com.airportpus.domain.apron.presentation.dto.ApronInResponse;
 import com.airportpus.domain.apron.presentation.dto.ApronOutResponse;
 import com.airportpus.domain.apron.service.dto.ApronApiResponse;
@@ -17,6 +18,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,15 +48,26 @@ public class ApronService {
         .block();
   }
 
+  public Optional<?> getApronInfoByFlightNumber(String flightNumber) {
+    String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+    return apronWebClient.get()
+        .uri(uriBuilder -> uriBuilder
+            .queryParam("serviceKey", apiProperties.getServiceKey())
+            .queryParam("numOfRows", 1)
+            .queryParam("flightdate", today)
+            .queryParam("airportCode", "PUS")
+            .queryParam("airfln", flightNumber)
+            .build())
+        .accept(MediaType.APPLICATION_XML)
+        .retrieve()
+        .bodyToMono(String.class)
+        .map(this::convertXmlToSingleApronResponse)
+        .block();
+  }
+
   private List<?> convertXmlToApronResponse(String xml, String type) {
-    ApronApiResponse apronApiResponse;
-
-    try {
-      apronApiResponse = xmlMapper.readValue(xml, ApronApiResponse.class);
-    } catch (JsonProcessingException e) {
-      throw new XmlParsingException();
-    }
-
+    ApronApiResponse apronApiResponse = parseXml(xml);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
     LocalTime nowPlus10Minutes = LocalTime.now().plusMinutes(10);
 
@@ -77,6 +90,26 @@ public class ApronService {
         }))
         .map(info -> "I".equals(type) ? ApronInResponse.from(info) : ApronOutResponse.from(info))
         .collect(Collectors.toList());
+  }
+
+  private Optional<?> convertXmlToSingleApronResponse(String xml) {
+    ApronApiResponse apronApiResponse = parseXml(xml);
+
+    List<ApronApiResponse.FlightInfo> items = apronApiResponse.getBody().getItems();
+    if (items.isEmpty()) {
+      throw new FlightNumberNotFoundException();
+    }
+
+    ApronApiResponse.FlightInfo info = items.get(0);
+    return Optional.of("I".equals(info.getIo()) ? ApronInResponse.from(info) : ApronOutResponse.from(info));
+  }
+
+  private ApronApiResponse parseXml(String xml) {
+    try {
+      return xmlMapper.readValue(xml, ApronApiResponse.class);
+    } catch (JsonProcessingException e) {
+      throw new XmlParsingException();
+    }
   }
 
   private String getFlightTime(ApronApiResponse.FlightInfo info) {
