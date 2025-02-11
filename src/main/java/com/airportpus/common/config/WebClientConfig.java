@@ -43,4 +43,21 @@ public class WebClientConfig {
         .uriBuilderFactory(factory)
         .build();
   }
+
+  @Bean
+  @Qualifier("apronWebClient")
+  public WebClient apronWebClient() {
+    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(apiProperties.getApronBaseUrl());
+    factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
+
+    return WebClient.builder()
+        .uriBuilderFactory(factory)
+        .exchangeStrategies(ExchangeStrategies.builder()
+            .codecs(clientCodecConfigurer -> {
+              clientCodecConfigurer.defaultCodecs().jaxb2Decoder(new Jaxb2XmlDecoder());
+              clientCodecConfigurer.defaultCodecs().jaxb2Encoder(new Jaxb2XmlEncoder());
+            })
+            .build())
+        .build();
+  }
 }
