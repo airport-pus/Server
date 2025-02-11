@@ -14,4 +14,5 @@ public class ApiProperties {
   private String serviceKey;
   private String parkingBaseUrl;
   private String congestionBaseUrl;
+  private String apronBaseUrl;
 }
