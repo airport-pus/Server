@@ -17,7 +17,6 @@ public record ApronInResponse(
     String line,
     String remarkEng,
     String remarkKor
-
 ) {
 
   public static ApronInResponse from(ApronApiResponse.FlightInfo info) {
