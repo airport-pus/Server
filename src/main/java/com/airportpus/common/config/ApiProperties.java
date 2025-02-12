@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "api")
+@ConfigurationProperties(prefix = "spring.api")
 public class ApiProperties {
 
   private String serviceKey;
