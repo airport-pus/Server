@@ -20,7 +20,7 @@ public class ParkingSchedulerService {
 
   @Scheduled(cron = "0 0 * * * *")
   public void saveParking() {
-    List<ParkingResponse> parkingInfoList = parkingService.getParkingInfo();
+    List<ParkingResponse> parkingInfoList = parkingService.getParkingByRealTime();
     parkingInfoList.forEach(parkingResponse -> {
       Parking parking = Parking.builder()
           .airportCodeName(parkingResponse.parkingAirportCodeName())
