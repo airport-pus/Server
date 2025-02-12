@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/parking")
+@RequestMapping("/parkings")
 @RequiredArgsConstructor
 public class ParkingController {
 
@@ -18,11 +18,16 @@ public class ParkingController {
   private final ParkingFeeService parkingFeeService;
 
   @GetMapping(produces = "application/json")
+  public List<ParkingResponse> getAllParkingByCongestion() {
+    return parkingService.findAll();
+  }
+
+  @GetMapping(value = "/real", produces = "application/json")
   public List<ParkingResponse> getParkingByRealTime() {
     return parkingService.getParkingByRealTime();
   }
 
-  @PostMapping(produces = "application/json")
+  @PostMapping(value = "/fee",produces = "application/json")
   public int getParkingFee(@RequestBody ParkingFeeRequest request) {
     return parkingFeeService.getTotalFee(
         request.holidayMinutes(),
