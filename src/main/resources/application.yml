@@ -2,6 +2,12 @@ spring:
   config:
     import:
       - optional:file:env/spring.env[.properties]
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: ${REDIS_PASSWORD}
+      timeout: 6000ms
 
 api:
   service-key: ${API_AIRPORT_PARKING_KEY}
