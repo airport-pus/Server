@@ -18,8 +18,8 @@ public class ParkingController {
   private final ParkingFeeService parkingFeeService;
 
   @GetMapping(produces = "application/json")
-  public List<ParkingResponse> getParking() {
-    return parkingService.getParkingInfo();
+  public List<ParkingResponse> getParkingByRealTime() {
+    return parkingService.getParkingByRealTime();
   }
 
   @PostMapping(produces = "application/json")
