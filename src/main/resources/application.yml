@@ -2,6 +2,7 @@ spring:
   config:
     import:
       - optional:file:env/spring.env[.properties]
+
   data:
     redis:
       host: 127.0.0.1
@@ -9,12 +10,24 @@ spring:
       password: ${REDIS_PASSWORD}
       timeout: 6000ms
 
-api:
-  service-key: ${API_AIRPORT_PARKING_KEY}
-  parking-base-url: http://openapi.airport.co.kr/service/rest/AirportParkingCongestion/airportParkingCongestionRT
-  congestion-base-url: https://api.odcloud.kr/api/getAPRTPsgrCongestion_v2/v1/aprtPsgrCongestion%E2%80%8BV2
-  apron-base-url: http://openapi.airport.co.kr/service/rest/FlightApronStateList/getFlightApronStatusList
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
 
-logging:
-  level:
-    org.springframework.web.reactive.function.client: DEBUG
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  api:
+    service-key: ${API_AIRPORT_PARKING_KEY}
+    parking-base-url: http://openapi.airport.co.kr/service/rest/AirportParkingCongestion/airportParkingCongestionRT
+    congestion-base-url: https://api.odcloud.kr/api/getAPRTPsgrCongestion_v2/v1/aprtPsgrCongestion%E2%80%8BV2
+    apron-base-url: http://openapi.airport.co.kr/service/rest/FlightApronStateList/getFlightApronStatusList
+
+  logging:
+    level:
+      org.springframework.web.reactive.function.client: DEBUG
