@@ -22,7 +22,7 @@ public class ParkingService {
   private final ApiProperties apiProperties;
   private final XmlMapper xmlMapper = new XmlMapper();
 
-  public List<ParkingResponse> getParkingInfo() {
+  public List<ParkingResponse> getParkingByRealTime() {
     return parkingWebClient.get()
         .uri(uriBuilder -> uriBuilder
             .queryParam("serviceKey", apiProperties.getServiceKey())
@@ -36,7 +36,7 @@ public class ParkingService {
   }
 
   private List<ParkingResponse> convertXmlToParkingResponse(String xml) {
-    ParkingApiResponse parkingApiResponse = null;
+    ParkingApiResponse parkingApiResponse;
     try {
       parkingApiResponse = xmlMapper.readValue(xml, ParkingApiResponse.class);
     } catch (JsonProcessingException e) {
