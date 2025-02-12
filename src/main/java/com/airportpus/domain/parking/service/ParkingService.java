@@ -1,5 +1,6 @@
 package com.airportpus.domain.parking.service;
 
+import com.airportpus.domain.parking.domain.repository.ParkingRepository;
 import com.airportpus.domain.parking.exception.XmlParsingException;
 import com.airportpus.domain.parking.presentation.dto.ParkingResponse;
 import com.airportpus.domain.parking.service.dto.ParkingApiResponse;
@@ -18,9 +19,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ParkingService {
 
+  private final ParkingRepository parkingRepository;
   private final WebClient parkingWebClient;
   private final ApiProperties apiProperties;
   private final XmlMapper xmlMapper = new XmlMapper();
+
+  public List<ParkingResponse> findAll() {
+    return parkingRepository.findAll().stream()
+        .map(ParkingResponse::fromByParking)
+        .collect(Collectors.toList());
+  }
 
   public List<ParkingResponse> getParkingByRealTime() {
     return parkingWebClient.get()
@@ -44,7 +52,7 @@ public class ParkingService {
     }
 
     return parkingApiResponse.getBody().getItems().stream()
-          .map(ParkingResponse::from)
+          .map(ParkingResponse::fromByParkingInfo)
           .collect(Collectors.toList());
   }
 }
