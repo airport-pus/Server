@@ -11,9 +11,14 @@ spring:
       timeout: 6000ms
 
   datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+
+#    url: jdbc:mariadb://${DB_URL}:${DB_PORT}/{DB_dataBaseName}?characterEncoding=UTF-8&serverTimezone=UTC
+#    username: ${DB_USER}
+#    password: ${DB_PASWWORD}
 
   jpa:
     hibernate:
