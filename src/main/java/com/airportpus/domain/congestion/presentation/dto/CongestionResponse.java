@@ -1,5 +1,6 @@
 package com.airportpus.domain.congestion.presentation.dto;
 
+import com.airportpus.domain.congestion.domain.Congestion;
 import com.airportpus.domain.congestion.service.dto.CongestionApiResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -11,12 +12,21 @@ public record CongestionResponse(
     @Schema(description = "3구간 혼잡도 레벨(1:원활 , 2:보통, 3:혼잡, 4:매우혼잡)", example = "3") int cgdrCLvl
 ) {
 
-  public static CongestionResponse from(CongestionApiResponse.CongestionInfo info) {
+  public static CongestionResponse fromByInfo(CongestionApiResponse.CongestionInfo info) {
     return new CongestionResponse(
         info.cgdrAllLvl(),
         info.cgdrALvl(),
         info.cgdrBLvl(),
         info.cgdrCLvl()
+    );
+  }
+
+  public static CongestionResponse fromByCongestion(Congestion congestion) {
+    return new CongestionResponse(
+        congestion.getCgdrAllLvl(),
+        congestion.getCgdrALvl(),
+        congestion.getCgdrBLvl(),
+        congestion.getCgdrCLvl()
     );
   }
 }
