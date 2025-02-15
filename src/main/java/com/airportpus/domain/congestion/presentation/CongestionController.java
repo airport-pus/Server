@@ -1,6 +1,7 @@
 package com.airportpus.domain.congestion.presentation;
 
-import com.airportpus.domain.congestion.presentation.dto.CongestionResponse;
+import com.airportpus.domain.congestion.presentation.dto.RealCongestionResponse;
+import com.airportpus.domain.congestion.presentation.dto.SaveCongestionResponse;
 import com.airportpus.domain.congestion.service.CongestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +25,7 @@ public class CongestionController {
       description = "저장된 전체 구간 및 각 구간(1구간, 2구간, 3구간)의 혼잡도 정보를 반환합니다."
   )
   @GetMapping(produces = "application/json")
-  public List<CongestionResponse> getCongestion() {
+  public List<SaveCongestionResponse> getCongestion() {
     return congestionService.getAll();
   }
 
@@ -33,7 +34,7 @@ public class CongestionController {
       description = "전체 구간 및 각 구간(1구간, 2구간, 3구간)의 혼잡도 정보를 반환합니다."
   )
   @GetMapping(value = "/real", produces = "application/json")
-  public CongestionResponse getCongestionByReal() {
+  public RealCongestionResponse getCongestionByReal() {
     return congestionService.getCongestionRealTime();
   }
 }
