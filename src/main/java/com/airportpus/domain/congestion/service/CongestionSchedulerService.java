@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -26,5 +28,11 @@ public class CongestionSchedulerService {
         .cgdrCLvl(response.cgdrCLvl())
         .build();
     congestionRepository.save(congestion);
+  }
+
+  @Scheduled(cron = "0 0 0 * * *")
+  public void deleteOldCongestionData() {
+    LocalDateTime cutoff = LocalDateTime.now().minusDays(1);
+    congestionRepository.deleteByCreatedAtBefore(cutoff);
   }
 }
