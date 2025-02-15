@@ -1,6 +1,5 @@
 package com.airportpus.domain.parking.service;
 
-import com.airportpus.domain.parking.exception.XmlParsingException;
 import com.airportpus.domain.parking.presentation.dto.ParkingResponse;
 import com.airportpus.domain.parking.service.dto.ParkingApiResponse;
 import com.airportpus.common.config.ApiProperties;
@@ -39,7 +38,7 @@ public class ParkingService {
     try {
       parkingApiResponse = xmlMapper.readValue(xml, ParkingApiResponse.class);
     } catch (JsonProcessingException e) {
-      throw new XmlParsingException();
+      throw new RuntimeException(e);
     }
 
     return parkingApiResponse.getBody().getItems().stream()
