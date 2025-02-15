@@ -3,7 +3,7 @@ package com.airportpus.domain.parking.presentation.dto;
 import com.airportpus.domain.parking.service.dto.ParkingApiResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "주차장 정보 응답 DTO")
+@Schema(description = "주차장 응답 DTO")
 public record ParkingResponse(
 
     @Schema(description = "주차장명", example = "P1 여객주차장")
