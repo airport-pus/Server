@@ -3,7 +3,6 @@ package com.airportpus.domain.holiday.service;
 import com.airportpus.common.config.ApiProperties;
 import com.airportpus.domain.holiday.presentation.dto.HolidayResponse;
 import com.airportpus.domain.holiday.service.dto.HolidayApiResponse;
-import com.airportpus.domain.parking.exception.XmlParsingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +40,7 @@ public class HolidayService {
     try {
       holidayApiResponse = xmlMapper.readValue(xml, HolidayApiResponse.class);
     } catch (JsonProcessingException e) {
-      throw new XmlParsingException();
+      throw new RuntimeException(e);
     }
 
     return holidayApiResponse.getBody().getItems().stream()
