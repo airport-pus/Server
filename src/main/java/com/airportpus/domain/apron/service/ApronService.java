@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -89,18 +88,18 @@ public class ApronService {
           }
         }))
         .map(info -> "I".equals(type) ? ApronInResponse.from(info) : ApronOutResponse.from(info))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private Optional<?> convertXmlToSingleApronResponse(String xml) {
     ApronApiResponse apronApiResponse = parseXml(xml);
 
-    List<ApronApiResponse.FlightInfo> items = apronApiResponse.getBody().getItems();
+    List<ApronApiResponse.ApronInfo> items = apronApiResponse.getBody().getItems();
     if (items.isEmpty()) {
       throw new FlightNumberNotFoundException();
     }
 
-    ApronApiResponse.FlightInfo info = items.get(0);
+    ApronApiResponse.ApronInfo info = items.get(0);
     return Optional.of("I".equals(info.getIo()) ? ApronInResponse.from(info) : ApronOutResponse.from(info));
   }
 
@@ -112,7 +111,7 @@ public class ApronService {
     }
   }
 
-  private String getFlightTime(ApronApiResponse.FlightInfo info) {
+  private String getFlightTime(ApronApiResponse.ApronInfo info) {
     return (info.getEtd() != null && !info.getEtd().isBlank()) ? info.getEtd() : info.getStd();
   }
 }
