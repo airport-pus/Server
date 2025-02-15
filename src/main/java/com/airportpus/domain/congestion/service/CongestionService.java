@@ -2,7 +2,8 @@ package com.airportpus.domain.congestion.service;
 
 import com.airportpus.common.config.ApiProperties;
 import com.airportpus.domain.congestion.domain.repository.CongestionRepository;
-import com.airportpus.domain.congestion.presentation.dto.CongestionResponse;
+import com.airportpus.domain.congestion.presentation.dto.RealCongestionResponse;
+import com.airportpus.domain.congestion.presentation.dto.SaveCongestionResponse;
 import com.airportpus.domain.congestion.service.dto.CongestionApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,20 +14,19 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
 public class CongestionService {
 
   private final CongestionRepository congestionRepository;
   private final WebClient congestionWebClient;
   private final ApiProperties apiProperties;
 
-  public List<CongestionResponse> getAll() {
+  public List<SaveCongestionResponse> getAll() {
     return congestionRepository.findAll().stream()
-        .map(CongestionResponse::fromByCongestion)
+        .map(SaveCongestionResponse::from)
         .toList();
   }
 
-  public CongestionResponse getCongestionRealTime() {
+  public RealCongestionResponse getCongestionRealTime() {
     return congestionWebClient.get()
         .uri(uriBuilder -> uriBuilder
             .queryParam("cond[IATA_APCD::EQ]", "PUS")
@@ -36,7 +36,7 @@ public class CongestionService {
         .retrieve()
         .bodyToMono(CongestionApiResponse.class)
         .map(response -> response.data().get(0))
-        .map(CongestionResponse::fromByInfo)
+        .map(RealCongestionResponse::from)
         .block();
   }
 }
