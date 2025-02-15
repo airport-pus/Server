@@ -21,7 +21,7 @@ public record ApronInResponse(
     @Schema(description = "한글 비고", example = "탑승중") String remarkKor
 ) {
 
-  public static ApronInResponse from(ApronApiResponse.FlightInfo info) {
+  public static ApronInResponse from(ApronApiResponse.ApronInfo info) {
     return new ApronInResponse(
         info.getFlightNumber(),
         info.getAirlineEnglish(),
