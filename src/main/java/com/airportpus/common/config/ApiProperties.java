@@ -15,4 +15,5 @@ public class ApiProperties {
   private String parkingBaseUrl;
   private String congestionBaseUrl;
   private String apronBaseUrl;
+  private String holidayBaseUrl;
 }
