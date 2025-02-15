@@ -34,17 +34,6 @@ public class WebClientConfig {
   }
 
   @Bean
-  @Qualifier("congestionWebClient")
-  public WebClient congestionWebClient() {
-    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(apiProperties.getCongestionBaseUrl());
-    factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
-
-    return WebClient.builder()
-        .uriBuilderFactory(factory)
-        .build();
-  }
-
-  @Bean
   @Qualifier("apronWebClient")
   public WebClient apronWebClient() {
     DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(apiProperties.getApronBaseUrl());
@@ -58,6 +47,34 @@ public class WebClientConfig {
               clientCodecConfigurer.defaultCodecs().jaxb2Encoder(new Jaxb2XmlEncoder());
             })
             .build())
+        .build();
+  }
+
+  @Bean
+  @Qualifier("holidayWebClient")
+  public WebClient holidayWebClient() {
+    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(apiProperties.getHolidayBaseUrl());
+    factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
+
+    return WebClient.builder()
+        .uriBuilderFactory(factory)
+        .exchangeStrategies(ExchangeStrategies.builder()
+            .codecs(clientCodecConfigurer -> {
+              clientCodecConfigurer.defaultCodecs().jaxb2Decoder(new Jaxb2XmlDecoder());
+              clientCodecConfigurer.defaultCodecs().jaxb2Encoder(new Jaxb2XmlEncoder());
+            })
+            .build())
+        .build();
+  }
+
+  @Bean
+  @Qualifier("congestionWebClient")
+  public WebClient congestionWebClient() {
+    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(apiProperties.getCongestionBaseUrl());
+    factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
+
+    return WebClient.builder()
+        .uriBuilderFactory(factory)
         .build();
   }
 }
