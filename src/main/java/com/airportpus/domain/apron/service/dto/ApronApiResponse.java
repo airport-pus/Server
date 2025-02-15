@@ -36,7 +36,7 @@ public class ApronApiResponse {
   public static class Body {
     @JacksonXmlElementWrapper(localName = "items")
     @JacksonXmlProperty(localName = "item")
-    private List<FlightInfo> items;
+    private List<ApronInfo> items;
 
     @JacksonXmlProperty(localName = "numOfRows")
     private int numOfRows;
@@ -50,7 +50,7 @@ public class ApronApiResponse {
 
   @Getter
   @Setter
-  public static class FlightInfo {
+  public static class ApronInfo {
     @JacksonXmlProperty(localName = "ufid")
     private String ufid;
 
