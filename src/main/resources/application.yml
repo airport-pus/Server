@@ -28,6 +28,7 @@ spring:
     parking-base-url: http://openapi.airport.co.kr/service/rest/AirportParkingCongestion/airportParkingCongestionRT
     congestion-base-url: https://api.odcloud.kr/api/getAPRTPsgrCongestion_v2/v1/aprtPsgrCongestion%E2%80%8BV2
     apron-base-url: http://openapi.airport.co.kr/service/rest/FlightApronStateList/getFlightApronStatusList
+    holiday-base-url: https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo
 
   logging:
     level:
