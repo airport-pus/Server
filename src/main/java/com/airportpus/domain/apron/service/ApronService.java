@@ -5,7 +5,6 @@ import com.airportpus.domain.apron.exception.FlightNumberNotFoundException;
 import com.airportpus.domain.apron.presentation.dto.ApronInResponse;
 import com.airportpus.domain.apron.presentation.dto.ApronOutResponse;
 import com.airportpus.domain.apron.service.dto.ApronApiResponse;
-import com.airportpus.domain.parking.exception.XmlParsingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.RequiredArgsConstructor;
@@ -107,7 +106,7 @@ public class ApronService {
     try {
       return xmlMapper.readValue(xml, ApronApiResponse.class);
     } catch (JsonProcessingException e) {
-      throw new XmlParsingException();
+      throw new RuntimeException(e);
     }
   }
 
