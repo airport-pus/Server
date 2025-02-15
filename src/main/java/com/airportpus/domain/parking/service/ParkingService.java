@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +44,6 @@ public class ParkingService {
 
     return parkingApiResponse.getBody().getItems().stream()
           .map(ParkingResponse::from)
-          .collect(Collectors.toList());
+          .toList();
   }
 }
