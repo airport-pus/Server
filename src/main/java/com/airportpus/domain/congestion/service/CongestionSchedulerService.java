@@ -18,7 +18,7 @@ public class CongestionSchedulerService {
   private final CongestionService congestionService;
   private final CongestionRepository congestionRepository;
 
-  @Scheduled(cron = "0 0 * * * *")
+  @Scheduled(cron = "0 0 * * * *", zone = "Asia/Seoul")
   public void saveCongestion() {
     RealCongestionResponse response = congestionService.getCongestionRealTime();
     Congestion congestion = Congestion.builder()
@@ -30,7 +30,7 @@ public class CongestionSchedulerService {
     congestionRepository.save(congestion);
   }
 
-  @Scheduled(cron = "0 0 0 * * *")
+  @Scheduled(cron = "0 0 * * * *", zone = "Asia/Seoul")
   public void deleteOldCongestionData() {
     LocalDateTime cutoff = LocalDateTime.now().minusDays(1);
     congestionRepository.deleteByCreatedAtBefore(cutoff);
