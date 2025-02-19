@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/apron")
@@ -29,17 +28,17 @@ public class ApronController {
   public List<?> getApron(
       @Parameter(description = "입/출국 구분: I(도착), O(출발)", required = true, example = "I")
       @RequestParam("io") String type) {
-    return apronService.getApronInfo(type);
+    return apronService.getApronByIo(type);
   }
 
   @Operation(
       summary = "항공편 상세 조회",
-      description = "항공편 번호(flightNumber)를 기준으로 주기장 항공편 정보를 조회합니다. 결과는 단일 항공편 정보입니다."
+      description = "항공편 번호(flightNumber)를 기준으로 주기장 항공편 정보를 조회합니다."
   )
   @GetMapping(value = "/flight", produces = "application/json")
-  public Optional<?> getApronByFlightNumber(
+  public List<?> getApronByFlightNumber(
       @Parameter(description = "항공편 번호", required = true, example = "KE123")
       @RequestParam("flightNumber") String flightNumber) {
-    return apronService.getApronInfoByFlightNumber(flightNumber);
+    return apronService.getApronByFlightNumber(flightNumber);
   }
 }
