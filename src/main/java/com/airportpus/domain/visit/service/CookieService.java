@@ -32,7 +32,6 @@ public class CookieService {
         .domain(DOMAIN)
         .maxAge(COOKIE_EXPIRATION)
         .path("/")
-        .secure(true)
         .httpOnly(true)
         .sameSite("None")
         .build();
