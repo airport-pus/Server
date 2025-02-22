@@ -3,8 +3,10 @@ package com.airportpus.domain.visit.service;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class CookieService {
 
@@ -15,10 +17,12 @@ public class CookieService {
     if (request.getCookies() != null) {
       for (Cookie cookie : request.getCookies()) {
         if (VISITOR_COOKIE.equals(cookie.getName())) {
+          log.info("방문 쿠키 발견: {}", cookie.getName());
           return true;
         }
       }
     }
+    log.info("방문 쿠키 없음.");
     return false;
   }
 
@@ -30,8 +34,6 @@ public class CookieService {
     cookie.setSecure(true);
     cookie.setHttpOnly(true);
     response.addCookie(cookie);
+    log.info("방문 쿠키 생성: {}", cookie.getName());
   }
 }
-
-
-
