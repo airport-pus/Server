@@ -24,8 +24,10 @@ public class CookieService {
 
   public void createVisitCookie(HttpServletResponse response) {
     Cookie cookie = new Cookie(VISITOR_COOKIE, "true");
+    cookie.setDomain("airport-pus.kr");
     cookie.setMaxAge(COOKIE_EXPIRATION);
     cookie.setPath("/");
+    cookie.setSecure(true);
     cookie.setHttpOnly(true);
     response.addCookie(cookie);
   }
