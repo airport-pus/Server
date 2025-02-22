@@ -4,6 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -27,10 +28,15 @@ public class CookieService {
   }
 
   public void createVisitCookie(HttpServletResponse response) {
-    Cookie cookie = new Cookie(VISITOR_COOKIE, "true");
-    cookie.setMaxAge(COOKIE_EXPIRATION);
-    cookie.setPath("/");
-    cookie.setHttpOnly(true);
-    response.addCookie(cookie);
+    ResponseCookie cookie = ResponseCookie.from("visited", "true")
+        .maxAge(COOKIE_EXPIRATION)
+        .path("/")
+        .httpOnly(true)
+        .secure(true)
+        .sameSite("None")
+        .build();
+
+    response.addHeader("Set-Cookie", cookie.toString());
+    log.info("쿠키 헤더에 추가");
   }
 }
