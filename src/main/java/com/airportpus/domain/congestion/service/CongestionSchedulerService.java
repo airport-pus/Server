@@ -33,7 +33,7 @@ public class CongestionSchedulerService {
 
   @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
   public void deleteOldCongestionData() {
-    LocalDateTime yesterdayMidnight = LocalDate.now().atStartOfDay();
-    congestionRepository.deleteByCreatedAtBefore(yesterdayMidnight);
+    LocalDateTime yesterdayEnd = LocalDate.now().minusDays(1).atTime(23, 59, 59, 999_999_999);
+    congestionRepository.deleteByCreatedAtBefore(yesterdayEnd);
   }
 }
