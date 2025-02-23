@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -30,9 +31,9 @@ public class CongestionSchedulerService {
     congestionRepository.save(congestion);
   }
 
-  @Scheduled(cron = "0 0 * * * *", zone = "Asia/Seoul")
+  @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
   public void deleteOldCongestionData() {
-    LocalDateTime cutoff = LocalDateTime.now().minusDays(1);
-    congestionRepository.deleteByCreatedAtBefore(cutoff);
+    LocalDateTime yesterdayMidnight = LocalDate.now().atStartOfDay();
+    congestionRepository.deleteByCreatedAtBefore(yesterdayMidnight);
   }
 }
