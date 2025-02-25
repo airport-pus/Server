@@ -16,9 +16,11 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
     hikari:
+      maximumPoolSize: 20
+      minimumIdle: 5
       idleTimeout: 240000
-      maxLifetime: 290000
-      keepaliveTime: 180000
+      maxLifetime: 280000
+      keepaliveTime: 150000
 
   jpa:
     hibernate:
