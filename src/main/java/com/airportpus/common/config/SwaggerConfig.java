@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
             + "| 400 | NULL_VALUE | 필수 값이 누락되었습니다. |\n"
             + "| 403 | FLIGHT_NUMBER_NOT_FOUND | 항공편명을 찾을 수 없습니다. |\n"
             + "| 403 | PARKING_LOT_NOT_FOUND | 주차장을 찾을 수 없습니다. |\n"
+            + "| 403 | CONGESTION_NOT_FOUND | 혼잡도를 찾을 수 없습니다. |\n"
             + "| 500 | XML_PARSING_ERROR | XML 파싱에 실패했습니다. |\n"
             + "| 500 | SERVER_UNKNOWN | 서버에서 알 수 없는 에러가 발생했습니다. |\n"
             + "### 오류 메시지 예시:\n"
