@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
             | 400 | TYPE_MISMATCH | 파라미터 타입이 일치하지 않습니다. |
             | 400 | NULL_VALUE | 필수 값이 누락되었습니다. |
             | 403 | PARKING_LOT_NOT_FOUND | 주차장을 찾을 수 없습니다. |
-            | 403 | CONGESTION_NOT_FOUND | 혼잡도를 찾을 수 없습니다. |
             | 500 | XML_PARSING_ERROR | XML 파싱에 실패했습니다. |
             | 500 | SERVER_UNKNOWN | 서버에서 알 수 없는 에러가 발생했습니다. |
             ### 오류 메시지 예시:
