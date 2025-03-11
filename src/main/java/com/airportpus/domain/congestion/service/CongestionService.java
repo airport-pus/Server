@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.http.MediaType;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.util.List;
 
 @Service
@@ -35,6 +37,7 @@ public class CongestionService {
         .accept(MediaType.APPLICATION_JSON)
         .retrieve()
         .bodyToMono(CongestionApiResponse.class)
+        .retryWhen(Retry.fixedDelay(3, Duration.ofSeconds(5)))
         .map(response -> response.data().isEmpty() ?
             new RealCongestionResponse(0, 0, 0, 0) :
             RealCongestionResponse.from(response.data().get(0)))
